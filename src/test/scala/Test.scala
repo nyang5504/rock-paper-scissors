@@ -5,7 +5,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 ////must try every combination of 2 possible. This results in 3^3 tests. After these tests, we must also test cases where there is
 ////one or more input that is invalid. After printing all these results we can see if there are any inconsistencies.
 
-class test extends AnyFlatSpec{
+class Test extends AnyFlatSpec{
   "rock" should "beat scissors" in {
     assert(PrimitiveDecider.beats("rock", "scissors") == "true")
   }
