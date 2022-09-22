@@ -1,0 +1,14 @@
+I'm mostly happy with your implementation.
+I like how thorough your error cases were.
+There's a more concise way of coding up the happy path scenario tests, which I'll show everyone 
+soon in class. You create a map of type [(String, String), String] wherein the keys are tuples 
+having the first and second move, and the values are the expected result. Then you use the method 
+map on this collection and pass in a lambda expression which compares the actual result to the 
+expected one. Once I show that in class, I'd like everyone to try and get that to work. 
+The only other item I noticed that deserves mention is your name choice for your user interface. 
+You call the object Main, which doesn't convey the intent of it. 
+Since in theory one could attach different types of user interfaces to the decider, something like 
+CommandLineUI might convey the intent of that module better.
+Believe it or not, in industry people care a lot about which names are chosen for modules, variables, 
+functions, etc.
+Please make those adjustments before moving on to the next assignment.
