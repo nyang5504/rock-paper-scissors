@@ -6,61 +6,72 @@ import org.scalatest.flatspec.AnyFlatSpec
 ////one or more input that is invalid. After printing all these results we can see if there are any inconsistencies.
 
 class Test extends AnyFlatSpec{
-  "rock" should "beat scissors" in {
-    assert(PrimitiveDecider.beats("rock", "scissors") == "true")
-  }
-  "rock" should "lose to paper" in {
-    assert(PrimitiveDecider.beats("rock", "paper") == "false")
-  }
-  "rock" should "not lose nor win against rock" in {
-    assert(PrimitiveDecider.beats("rock", "rock") == "undecided")
-  }
+
+  val movesAndResultsMap: Map[(String,String),String] =
+    Map.apply(("rock","paper") -> "false", ("rock", "scissors") -> "true", ("rock","rock") -> "undecided",
+      ("paper","scissors") -> "false", ("paper", "rock") -> "true", ("paper","paper") -> "undecided",
+      ("scissors","rock") -> "false", ("scissors", "paper") -> "true", ("scissors","scissors") -> "undecided",
+      ("a","rock") -> "error", ("a","paper") -> "error", ("a","scissors") -> "error",
+      ("rock","a") -> "error", ("paper","a") -> "error", ("scissors","a") -> "error", ("a","b") -> "error")
+
+  assert(movesAndResultsMap.map {case (moves, expected) => PrimitiveDecider.beats(moves._1,moves._2) == expected}.forall(_==true))
 
 
-  "paper" should "beat rock" in {
-    assert(PrimitiveDecider.beats("paper", "rock") == "true")
-  }
-  "paper" should "lose to scissors" in {
-    assert(PrimitiveDecider.beats("paper", "scissors") == "false")
-  }
-  "paper" should "not lose nor win against paper" in {
-    assert(PrimitiveDecider.beats("paper", "paper") == "undecided")
-  }
-
-
-  "scissors" should "beat paper" in {
-    assert(PrimitiveDecider.beats("scissors", "paper") == "true")
-  }
-  "scissors" should "lose to rock" in {
-    assert(PrimitiveDecider.beats("scissors", "rock") == "false")
-  }
-  "scissors" should "not lose nor win against scissors" in {
-    assert(PrimitiveDecider.beats("scissors", "scissors") == "undecided")
-  }
-
-
-  "invalid move" should "produce an error against rock" in {
-    assert(PrimitiveDecider.beats("a", "rock") == "error")
-  }
-  "invalid move" should "produce an error against paper" in {
-    assert(PrimitiveDecider.beats("a", "paper") == "error")
-  }
-  "invalid move" should "produce an error against scissors" in {
-    assert(PrimitiveDecider.beats("a", "scissors") == "error")
-  }
-
-  "invalid move" should "produce an error against invalid move" in {
-    assert(PrimitiveDecider.beats("a", "b") == "error")
-  }
-
-
-  "rock" should "produce an error against invalid move" in {
-    assert(PrimitiveDecider.beats("rock", "a") == "error")
-  }
-  "paper" should "produce an error against invalid move" in {
-    assert(PrimitiveDecider.beats("paper", "a") == "error")
-  }
-  "scissors" should "produce an error against invalid move" in {
-    assert(PrimitiveDecider.beats("scissors", "a") == "error")
-  }
+//  "rock" should "beat scissors" in {
+//    assert(PrimitiveDecider.beats("rock", "scissors") == "true")
+//  }
+//  "rock" should "lose to paper" in {
+//    assert(PrimitiveDecider.beats("rock", "paper") == "false")
+//  }
+//  "rock" should "not lose nor win against rock" in {
+//    assert(PrimitiveDecider.beats("rock", "rock") == "undecided")
+//  }
+//
+//
+//  "paper" should "beat rock" in {
+//    assert(PrimitiveDecider.beats("paper", "rock") == "true")
+//  }
+//  "paper" should "lose to scissors" in {
+//    assert(PrimitiveDecider.beats("paper", "scissors") == "false")
+//  }
+//  "paper" should "not lose nor win against paper" in {
+//    assert(PrimitiveDecider.beats("paper", "paper") == "undecided")
+//  }
+//
+//
+//  "scissors" should "beat paper" in {
+//    assert(PrimitiveDecider.beats("scissors", "paper") == "true")
+//  }
+//  "scissors" should "lose to rock" in {
+//    assert(PrimitiveDecider.beats("scissors", "rock") == "false")
+//  }
+//  "scissors" should "not lose nor win against scissors" in {
+//    assert(PrimitiveDecider.beats("scissors", "scissors") == "undecided")
+//  }
+//
+//
+//  "invalid move" should "produce an error against rock" in {
+//    assert(PrimitiveDecider.beats("a", "rock") == "error")
+//  }
+//  "invalid move" should "produce an error against paper" in {
+//    assert(PrimitiveDecider.beats("a", "paper") == "error")
+//  }
+//  "invalid move" should "produce an error against scissors" in {
+//    assert(PrimitiveDecider.beats("a", "scissors") == "error")
+//  }
+//
+//  "invalid move" should "produce an error against invalid move" in {
+//    assert(PrimitiveDecider.beats("a", "b") == "error")
+//  }
+//
+//
+//  "rock" should "produce an error against invalid move" in {
+//    assert(PrimitiveDecider.beats("rock", "a") == "error")
+//  }
+//  "paper" should "produce an error against invalid move" in {
+//    assert(PrimitiveDecider.beats("paper", "a") == "error")
+//  }
+//  "scissors" should "produce an error against invalid move" in {
+//    assert(PrimitiveDecider.beats("scissors", "a") == "error")
+//  }
 }
