@@ -1,8 +1,6 @@
-import org.scalatest.flatspec.AnyFlatSpec
 import NestedMatchDecider.NestedMatchDecider
-import benjamingarrett.rockpaperscissorstools.{AWins, BWins, Paper, RPSMove, RPSOutcome, Rock, Scissors, Tie}
-
-import scala.collection.IterableOnce.iterableOnceExtensionMethods
+import benjamingarrett.rockpaperscissorstools._
+import org.scalatest.flatspec.AnyFlatSpec
 
 class NestedMatchDeciderTests extends AnyFlatSpec {
 
