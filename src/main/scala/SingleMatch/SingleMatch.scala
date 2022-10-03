@@ -4,8 +4,9 @@ import SingleMatchDecider.SingleMatchDecider
 
 object SingleMatch extends RPSMatch {
   override def playMatch(rounds: Int)(firstPlayer: RPSHistoryBasedPlayer)(secondPlayer: RPSHistoryBasedPlayer): List[RPSOutcome] = {
+
     def doSomething(rounds: Int)(history1: List[(RPSMove, RPSOutcome)])(history2: List[(RPSMove, RPSOutcome)])(outcomeList: List[RPSOutcome]): List[RPSOutcome] = {
-      if (rounds == 0) return List.empty
+      if (rounds <= 0) return List.empty[RPSOutcome]
       val histories = addToHistory(history1)(history2)(firstPlayer)(secondPlayer)
       val lastOutcome = List(histories._1.last._2)
       doSomething(rounds - 1)(histories._1)(histories._2)(outcomeList ++ lastOutcome)
@@ -21,23 +22,14 @@ object SingleMatch extends RPSMatch {
     val player2NextMove = player2.playMove(history2)
     val gameResult = SingleMatchDecider.beats(player1NextMove)(player2NextMove)
 
-    if (gameResult == AWins) {
-      val player1LatestHistory = List((player1NextMove, AWins))
-      val player2LatestHistory = List((player2NextMove, BWins))
-      (history1 ++ player1LatestHistory, history2 ++ player2LatestHistory)
+    val histories = gameResult match {
+      case AWins => (history1 ++ List((player1NextMove, AWins)), history2 ++ List((player2NextMove, BWins)))
+      case BWins => (history1 ++ List((player1NextMove, BWins)), history2 ++ List((player2NextMove, AWins)))
+      case Tie => (history1 ++ List((player1NextMove, Tie)), history2 ++ List((player2NextMove, Tie)))
     }
-    else if (gameResult == BWins) {
-      val player1LatestHistory = List((player1NextMove, BWins))
-      val player2LatestHistory = List((player2NextMove, AWins))
-      (history1 ++ player1LatestHistory, history2 ++ player2LatestHistory)
-    }
-    else {
-      val player1LatestHistory = List((player1NextMove, Tie))
-      val player2LatestHistory = List((player2NextMove, Tie))
-      (history1 ++ player1LatestHistory, history2 ++ player2LatestHistory)
-    }
-
+    histories
   }
+
 }
 
 
