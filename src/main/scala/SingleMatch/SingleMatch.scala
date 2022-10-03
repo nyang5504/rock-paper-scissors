@@ -5,14 +5,14 @@ import SingleMatchDecider.SingleMatchDecider
 object SingleMatch extends RPSMatch {
   override def playMatch(rounds: Int)(firstPlayer: RPSHistoryBasedPlayer)(secondPlayer: RPSHistoryBasedPlayer): List[RPSOutcome] = {
 
-    def doSomething(rounds: Int)(history1: List[(RPSMove, RPSOutcome)])(history2: List[(RPSMove, RPSOutcome)])(outcomeList: List[RPSOutcome]): List[RPSOutcome] = {
+    def conductMatch(rounds: Int)(history1: List[(RPSMove, RPSOutcome)])(history2: List[(RPSMove, RPSOutcome)])(outcomeList: List[RPSOutcome]): List[RPSOutcome] = {
       if (rounds <= 0) return List.empty[RPSOutcome]
       val histories = addToHistory(history1)(history2)(firstPlayer)(secondPlayer)
       val lastOutcome = List(histories._1.last._2)
-      doSomething(rounds - 1)(histories._1)(histories._2)(outcomeList ++ lastOutcome)
+      conductMatch(rounds - 1)(histories._1)(histories._2)(outcomeList ++ lastOutcome)
     }
 
-    doSomething(rounds)(List.empty)(List.empty)(List.empty)
+    conductMatch(rounds)(List.empty)(List.empty)(List.empty)
   }
 
 
