@@ -32,6 +32,8 @@ class MixedTournamentSeason(val roundsPerMatch: Int) extends RPSTournamentSeason
           SingleTourneyMap += playerPair._2 -> (SingleTourneyMap(playerPair._2)+1)
         }
       }
+
+      //Sort wins from most to least
       var arrayTourney = SingleTourneyMap.toArray
       for(i <- 0 to arrayTourney.length-1){
         for(j <- i to arrayTourney.length-1){
@@ -43,12 +45,16 @@ class MixedTournamentSeason(val roundsPerMatch: Int) extends RPSTournamentSeason
         }
       }
 
+      //create a map of player -> rank
       var tourneyRanks = Map.empty[RPSHistoryBasedPlayer,Int]
       for(i <- 0 to arrayTourney.length-1){
         tourneyRanks += arrayTourney(i)._1 -> (i+1)
       }
+
+      //use RPSPointsSchema to award points based on player rank
       tourneyRanks.map {case (player, points) => player -> RPSPointsSchema.pointsAwarded(points)}
 
+      //update the point values for players by adding points from current tournament
       for((key, value) <- tourneyRanks){
         resultMap += key -> (value + resultMap(key))
       }
