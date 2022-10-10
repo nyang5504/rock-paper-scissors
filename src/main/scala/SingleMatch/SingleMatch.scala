@@ -23,9 +23,9 @@ object SingleMatch extends RPSMatch {
     val gameResult = SingleMatchDecider.beats(player1NextMove)(player2NextMove)
 
     val histories = gameResult match {
-      case AWins => (history1 ++ List((player1NextMove, AWins)), history2 ++ List((player2NextMove, BWins)))
-      case BWins => (history1 ++ List((player1NextMove, BWins)), history2 ++ List((player2NextMove, AWins)))
-      case Tie => (history1 ++ List((player1NextMove, Tie)), history2 ++ List((player2NextMove, Tie)))
+      case AWins => (List((player1NextMove, AWins)) ++ history1, history2 ++ List((player2NextMove, BWins)))
+      case BWins => (List((player1NextMove, BWins)) ++ history1, history2 ++ List((player2NextMove, AWins)))
+      case Tie => (List((player1NextMove, Tie)) ++ history1, history2 ++ List((player2NextMove, Tie)))
     }
     histories
   }
